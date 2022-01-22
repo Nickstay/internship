@@ -14,6 +14,7 @@ import javax.persistence.*;
 public class Worker {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 

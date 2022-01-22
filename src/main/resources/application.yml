@@ -1,0 +1,15 @@
+spring:
+  datasource:
+#    Specify DBMS driver, url:port and database name
+    url: jdbc:postgresql://localhost:5432/departmentmanagement
+    username: manager
+    password: bestmanager1989
+#  Database migration help us not to rely on SQL generation and allow us to update database consistently
+  flyway:
+    locations: classpath:migration
+  jpa:
+#    We have database migration so we don't want any generated changes, only those we have written
+    hibernate.ddl-auto: validate
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+#    Open Session in View (OSIV) is an anti-pattern which violates performance and scalability
+    open-in-view: false

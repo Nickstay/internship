@@ -7,8 +7,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class ErrorResponse {
-    private String code;
-    private int status;
-    private String message;
+public class DepartmentDto {
+    private long id;
+    private String name;
 }

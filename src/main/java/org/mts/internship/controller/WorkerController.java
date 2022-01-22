@@ -18,18 +18,13 @@ public class WorkerController {
 
     private final WorkerService service;
 
-    @GetMapping("{department}")
-    public ResponseEntity<Set<WorkerDto>> getByDepartment(@RequestParam String department){
-        return new ResponseEntity(service.getByDepartment(department), HttpStatus.FOUND);
-    }
-
     @GetMapping
     public ResponseEntity<Set<WorkerDto>> getAllWorkers(){
         return new ResponseEntity(service.getAllWorkers(), HttpStatus.FOUND);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<WorkerDto> getWorker(@RequestParam long id){
+    public ResponseEntity<WorkerDto> getWorker(@PathVariable long id){
         return new ResponseEntity(service.getById(id), HttpStatus.FOUND);
     }
 
@@ -38,13 +33,13 @@ public class WorkerController {
         return new ResponseEntity(service.createWorker(request), HttpStatus.CREATED);
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<WorkerDto> updateWorker(@RequestBody UpdateWorkerRequest request){
         return new ResponseEntity(service.updateWorker(request), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<WorkerDto> deleteWorker(@RequestParam long id){
+    public ResponseEntity<WorkerDto> deleteWorker(@PathVariable long id){
         return new ResponseEntity(service.deleteWorker(id), HttpStatus.OK);
     }
 

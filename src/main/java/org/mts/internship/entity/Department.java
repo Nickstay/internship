@@ -16,12 +16,14 @@ import java.util.Set;
 public class Department {
 
     @Id
+    @Column(name = "id")
     private long Id;
 
     @NaturalId
+    @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "department")
+    @OneToMany(mappedBy = "department", fetch = FetchType.EAGER)
     private Set<Worker> workers;
 
 }
