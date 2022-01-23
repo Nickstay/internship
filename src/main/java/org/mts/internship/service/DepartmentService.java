@@ -26,6 +26,8 @@ public class DepartmentService {
 
     private final WorkerRepository workerRepository;
     private final DepartmentRepository departmentRepository;
+    private final WorkerMapper workerMapper;
+    private final DepartmentMapper departmentMapper;
 
     @Transactional
     public WorkerDto transfer(TransferTicket ticket) {
@@ -38,7 +40,7 @@ public class DepartmentService {
         }
         worker.setDepartment(department);
         workerRepository.save(worker);
-        return WorkerMapper.mapToDto(worker);
+        return workerMapper.mapToDto(worker);
     }
 
     public Set<WorkerDto> getByDepartment(String departmentName) {
@@ -46,14 +48,14 @@ public class DepartmentService {
                 .orElseThrow(() -> new DepartmentNotFoundException(departmentName));
         Set<Worker> workers = department.getWorkers();
         return workers.stream()
-                .map(WorkerMapper::mapToDto)
+                .map(workerMapper::mapToDto)
                 .collect(Collectors.toSet());
     }
 
     public Set<DepartmentDto> getAll() {
         List<Department> departments= (List<Department>) departmentRepository.findAll();
         return departments.stream()
-                .map(DepartmentMapper::mapToDto)
+                .map(departmentMapper::mapToDto)
                 .collect(Collectors.toSet());
     }
 }

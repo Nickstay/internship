@@ -25,12 +25,12 @@ public class DepartmentController {
 
     @GetMapping("{department}")
     public ResponseEntity<Set<WorkerDto>> getByDepartment(@PathVariable String department){
-        return new ResponseEntity(service.getByDepartment(department), HttpStatus.FOUND);
+        return new ResponseEntity(service.getByDepartment(department), HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<Set<DepartmentDto>> getAllDepartments(){
-        return new ResponseEntity(service.getAll(), HttpStatus.FOUND);
+        return new ResponseEntity(service.getAll(), HttpStatus.OK);
     }
 
 }
