@@ -2,11 +2,13 @@ package org.mts.internship.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
+@Accessors(chain = true)
 public class CreateWorkerRequest {
     @NotNull
     private String firstName;

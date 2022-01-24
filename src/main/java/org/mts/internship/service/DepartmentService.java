@@ -37,8 +37,8 @@ public class DepartmentService {
         if (worker.getDepartment().getId() == department.getId()){
             throw new DestinationException(department.getName());
         }
-        worker.setDepartment(department);
 
+        worker.setDepartment(department);
         worker = workerRepository.save(worker);
         return workerMapper.mapToDto(worker);
     }
