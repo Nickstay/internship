@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,23 +38,24 @@ public class DepartmentService {
             throw new DestinationException(department.getName());
         }
         worker.setDepartment(department);
-        workerRepository.save(worker);
+
+        worker = workerRepository.save(worker);
         return workerMapper.mapToDto(worker);
     }
 
-    public Set<WorkerDto> getByDepartment(String departmentName) {
+    public List<WorkerDto> getByDepartment(String departmentName) {
         Department department = departmentRepository.findByName(departmentName)
                 .orElseThrow(() -> new DepartmentNotFoundException(departmentName));
-        Set<Worker> workers = department.getWorkers();
+        List<Worker> workers = department.getWorkers();
         return workers.stream()
                 .map(workerMapper::mapToDto)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
-    public Set<DepartmentDto> getAll() {
+    public List<DepartmentDto> getAll() {
         List<Department> departments= (List<Department>) departmentRepository.findAll();
         return departments.stream()
                 .map(departmentMapper::mapToDto)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 }

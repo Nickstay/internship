@@ -7,6 +7,7 @@ import org.mts.internship.exception.WorkerExistsByPhoneNumberException;
 import org.mts.internship.exception.WorkerNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -35,5 +36,15 @@ public class DepartManagerExceptionHandler {
                 .setCode("CONFLICT")
                 .setStatus(409)
                 .setMessage(ex.getMessage()), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleValidationException(){
+        String message = "Validation failed.";
+        return new ResponseEntity(new ErrorResponse()
+                .setCode("UNPROCESSABLE_ENTITY")
+                .setStatus(422)
+                .setMessage(message), HttpStatus.UNPROCESSABLE_ENTITY);
+
     }
 }

@@ -7,9 +7,10 @@ import org.mts.internship.dto.WorkerDto;
 import org.mts.internship.service.WorkerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class WorkerController {
     private final WorkerService service;
 
     @GetMapping
-    public ResponseEntity<Set<WorkerDto>> getAllWorkers(){
+    public ResponseEntity<List<WorkerDto>> getAllWorkers(){
         return new ResponseEntity(service.getAllWorkers(), HttpStatus.OK);
     }
 
@@ -29,13 +30,13 @@ public class WorkerController {
     }
 
     @PostMapping
-    public ResponseEntity<WorkerDto> createWorker(@RequestBody CreateWorkerRequest request){
+    public ResponseEntity<WorkerDto> createWorker(@RequestBody @Validated CreateWorkerRequest request){
         return new ResponseEntity(service.createWorker(request), HttpStatus.CREATED);
     }
 
     @PutMapping("{id}")
     public ResponseEntity<WorkerDto> updateWorker(@PathVariable long id, @RequestBody UpdateWorkerRequest request){
-        return new ResponseEntity(service.updateWorker(id, request), HttpStatus.ACCEPTED);
+        return new ResponseEntity(service.updateWorker(id, request), HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")

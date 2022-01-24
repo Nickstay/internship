@@ -1,10 +1,7 @@
 package org.mts.internship.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 
@@ -12,8 +9,9 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Accessors(chain = true)
+@EqualsAndHashCode
 @Table(name = "worker")
+@Accessors(chain = true)
 public class Worker {
 
     @Id
@@ -27,8 +25,7 @@ public class Worker {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @NaturalId
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", nullable = false, unique = true)
     private String phoneNumber;
 
     @ManyToOne

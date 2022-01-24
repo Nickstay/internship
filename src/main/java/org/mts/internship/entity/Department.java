@@ -1,17 +1,19 @@
 package org.mts.internship.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode
 @Table(name = "department")
 public class Department {
 
@@ -24,6 +26,6 @@ public class Department {
     private String name;
 
     @OneToMany(mappedBy = "department", fetch = FetchType.EAGER)
-    private Set<Worker> workers;
+    private List<Worker> workers;
 
 }

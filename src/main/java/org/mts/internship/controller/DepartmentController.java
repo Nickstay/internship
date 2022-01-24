@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,12 +24,12 @@ public class DepartmentController {
     }
 
     @GetMapping("{department}")
-    public ResponseEntity<Set<WorkerDto>> getByDepartment(@PathVariable String department){
+    public ResponseEntity<List<WorkerDto>> getByDepartment(@PathVariable String department){
         return new ResponseEntity(service.getByDepartment(department), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<Set<DepartmentDto>> getAllDepartments(){
+    public ResponseEntity<List<DepartmentDto>> getAllDepartments(){
         return new ResponseEntity(service.getAll(), HttpStatus.OK);
     }
 

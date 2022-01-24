@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,11 +26,11 @@ public class WorkerService {
     private final DepartmentRepository departmentRepository;
     private final WorkerMapper workerMapper;
 
-    public Set<WorkerDto> getAllWorkers() {
+    public List<WorkerDto> getAllWorkers() {
         List<Worker> workers = (List<Worker>) workerRepository.findAll();
         return workers.stream()
                 .map(workerMapper::mapToDto)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public WorkerDto getById(long id) {
@@ -53,7 +52,7 @@ public class WorkerService {
                 .setPhoneNumber(request.getPhoneNumber())
                 .setDepartment(department);
 
-        workerRepository.save(worker);
+        worker = workerRepository.save(worker);
         return workerMapper.mapToDto(worker);
     }
 
@@ -62,11 +61,17 @@ public class WorkerService {
         Worker worker = workerRepository.findById(id)
                 .orElseThrow(() -> new WorkerNotFoundException(id));
 
+        String phoneNumber = request.getPhoneNumber();
         if (request.getFirstName() != null) worker.setFirstName(request.getFirstName());
         if (request.getLastName() != null) worker.setLastName(request.getLastName());
-        if (request.getPhoneNumber() != null) worker.setPhoneNumber(request.getPhoneNumber());
+        if (phoneNumber != null) {
+            if(workerRepository.existsByPhoneNumber(phoneNumber)) {
+                throw new WorkerExistsByPhoneNumberException(phoneNumber);
+            }
+            worker.setPhoneNumber(phoneNumber);
+        }
 
-        workerRepository.save(worker);
+        worker = workerRepository.save(worker);
         return workerMapper.mapToDto(worker);
     }
 
